@@ -10,13 +10,14 @@ import {
   Settings2,
   SquareTerminal,
   User,
+  User2Icon,
 } from "lucide-react"
 
 export const data = {
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
+      name: "Dental Agency",
+      logo: User2Icon,
       plan: "Enterprise",
     },
     {

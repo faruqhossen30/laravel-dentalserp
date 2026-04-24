@@ -32,11 +32,11 @@ export default function Welcome() {
     const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
     const navLinks = [
-        { name: 'Home', href: '#' },
+        { name: 'Home', href: '/' },
         { name: 'About Us', href: '#' },
         { name: 'Services', href: '#', hasDropdown: true },
         { name: 'Case Studies', href: '#' },
-        { name: 'Contact', href: '#' },
+        { name: 'Contact', href: route('contact') },
     ];
 
     const stats = [
