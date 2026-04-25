@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\Frontend\NewsController;
+use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -15,9 +16,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/contact', function () {
-    return Inertia::render('Contact');
-})->name('contact');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
 Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');

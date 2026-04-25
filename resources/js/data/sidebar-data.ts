@@ -79,8 +79,12 @@ export const data = {
           url: route('admin.blogs.index'),
         },
         {
+          title: "Contacts",
+          url: route('admin.contacts.index'),
+        },
+        {
           title: "Settings",
-          url: "#",
+          url: route('admin.settings.index'),
         },
       ],
     }

@@ -1,4 +1,4 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { 
     ChevronDown, 
     Menu, 
@@ -20,6 +20,7 @@ import {
 import { useState } from 'react';
 
 export default function Contact() {
+    const { flash } = usePage().props as any;
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -40,8 +41,9 @@ export default function Contact() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // post(route('contact.store'));
-        console.log('Form data:', data);
+        post(route('contact.store'), {
+            onSuccess: () => reset(),
+        });
     };
 
     return (
@@ -199,6 +201,12 @@ export default function Contact() {
                         <div className="lg:col-span-7">
                             <div className="bg-slate-50 rounded-[40px] p-8 md:p-12 border border-slate-100 shadow-xl shadow-slate-200/50">
                                 <form onSubmit={handleSubmit} className="space-y-6">
+                                    {flash?.success && (
+                                        <div className="bg-emerald-50 border border-emerald-200 text-emerald-600 px-6 py-4 rounded-2xl text-sm font-bold flex items-center gap-3">
+                                            <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                                            {flash.success}
+                                        </div>
+                                    )}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4 flex items-center gap-2">
@@ -209,9 +217,10 @@ export default function Contact() {
                                                 value={data.name}
                                                 onChange={e => setData('name', e.target.value)}
                                                 placeholder="John Doe" 
-                                                className="w-full h-14 bg-white border border-slate-200 rounded-2xl px-6 outline-none focus:border-pink-600 focus:ring-4 focus:ring-pink-600/5 transition-all text-slate-900 placeholder:text-slate-300" 
+                                                className={`w-full h-14 bg-white border ${errors.name ? 'border-red-500' : 'border-slate-200'} rounded-2xl px-6 outline-none focus:border-pink-600 focus:ring-4 focus:ring-pink-600/5 transition-all text-slate-900 placeholder:text-slate-300`} 
                                                 required
                                             />
+                                            {errors.name && <div className="text-red-500 text-[10px] font-bold mt-1 ml-4 uppercase tracking-wider">{errors.name}</div>}
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4 flex items-center gap-2">
@@ -222,9 +231,10 @@ export default function Contact() {
                                                 value={data.email}
                                                 onChange={e => setData('email', e.target.value)}
                                                 placeholder="john@example.com" 
-                                                className="w-full h-14 bg-white border border-slate-200 rounded-2xl px-6 outline-none focus:border-pink-600 focus:ring-4 focus:ring-pink-600/5 transition-all text-slate-900 placeholder:text-slate-300" 
+                                                className={`w-full h-14 bg-white border ${errors.email ? 'border-red-500' : 'border-slate-200'} rounded-2xl px-6 outline-none focus:border-pink-600 focus:ring-4 focus:ring-pink-600/5 transition-all text-slate-900 placeholder:text-slate-300`} 
                                                 required
                                             />
+                                            {errors.email && <div className="text-red-500 text-[10px] font-bold mt-1 ml-4 uppercase tracking-wider">{errors.email}</div>}
                                         </div>
                                     </div>
 
@@ -238,9 +248,10 @@ export default function Contact() {
                                                 value={data.contact}
                                                 onChange={e => setData('contact', e.target.value)}
                                                 placeholder="+1 (555) 000-0000" 
-                                                className="w-full h-14 bg-white border border-slate-200 rounded-2xl px-6 outline-none focus:border-pink-600 focus:ring-4 focus:ring-pink-600/5 transition-all text-slate-900 placeholder:text-slate-300" 
+                                                className={`w-full h-14 bg-white border ${errors.contact ? 'border-red-500' : 'border-slate-200'} rounded-2xl px-6 outline-none focus:border-pink-600 focus:ring-4 focus:ring-pink-600/5 transition-all text-slate-900 placeholder:text-slate-300`} 
                                                 required
                                             />
+                                            {errors.contact && <div className="text-red-500 text-[10px] font-bold mt-1 ml-4 uppercase tracking-wider">{errors.contact}</div>}
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-4 flex items-center gap-2">
@@ -265,9 +276,10 @@ export default function Contact() {
                                             value={data.message}
                                             onChange={e => setData('message', e.target.value)}
                                             placeholder="Tell us about your goals..." 
-                                            className="w-full bg-white border border-slate-200 rounded-3xl p-6 outline-none focus:border-pink-600 focus:ring-4 focus:ring-pink-600/5 transition-all text-slate-900 placeholder:text-slate-300 resize-none"
+                                            className={`w-full bg-white border ${errors.message ? 'border-red-500' : 'border-slate-200'} rounded-3xl p-6 outline-none focus:border-pink-600 focus:ring-4 focus:ring-pink-600/5 transition-all text-slate-900 placeholder:text-slate-300 resize-none`}
                                             required
                                         ></textarea>
+                                        {errors.message && <div className="text-red-500 text-[10px] font-bold mt-1 ml-4 uppercase tracking-wider">{errors.message}</div>}
                                     </div>
 
                                     <button 

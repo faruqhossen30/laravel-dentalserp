@@ -26,4 +26,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('categories', CategoryController::class)->names('admin.categories');
     Route::post('media/upload', [\App\Http\Controllers\Backend\MediaUploadController::class, 'upload'])->name('admin.media.upload');
     Route::resource('blogs', \App\Http\Controllers\Backend\BlogController::class)->names('admin.blogs');
+    Route::resource('contacts', \App\Http\Controllers\Backend\ContactController::class)->only(['index', 'show', 'destroy'])->names('admin.contacts');
+    
+    Route::get('settings', [\App\Http\Controllers\Backend\SettingController::class, 'index'])->name('admin.settings.index');
+    Route::post('settings', [\App\Http\Controllers\Backend\SettingController::class, 'update'])->name('admin.settings.update');
 });
