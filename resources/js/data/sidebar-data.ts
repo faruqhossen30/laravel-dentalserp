@@ -83,8 +83,12 @@ export const data = {
           url: route('admin.contacts.index'),
         },
         {
-          title: "Settings",
-          url: route('admin.settings.index'),
+          title: "General Settings",
+          url: route('admin.general-setting.index'),
+        },
+        {
+          title: "SMTP Settings",
+          url: route('admin.smtp-setting.index'),
         },
       ],
     }

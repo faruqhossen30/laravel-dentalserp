@@ -7,7 +7,7 @@ import { Label } from '@/Components/ui/label';
 import { Separator } from '@/Components/ui/separator';
 import { Mail, Shield, Server, UserCheck } from 'lucide-react';
 
-export default function Index({ settings, title = 'General Settings' }: { settings: any, title?: string }) {
+export default function SmtpIndex({ settings, title = 'SMTP Settings' }: { settings: any, title?: string }) {
     const { data, setData, post, processing, errors } = useForm({
         mail_to_address: settings.mail_to_address || '',
         mail_host: settings.mail_host || '',
@@ -20,7 +20,7 @@ export default function Index({ settings, title = 'General Settings' }: { settin
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('admin.settings.update'));
+        post(route('admin.smtp-setting.update'));
     };
 
     return (

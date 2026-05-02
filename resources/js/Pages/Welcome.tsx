@@ -33,7 +33,7 @@ export default function Welcome() {
 
     const navLinks = [
         { name: 'Home', href: '/' },
-        { name: 'About Us', href: '#' },
+        { name: 'About Us', href: route('about') },
         { name: 'Services', href: '#', hasDropdown: true },
         { name: 'Case Studies', href: '#' },
         { name: 'Contact', href: route('contact') },
@@ -752,7 +752,9 @@ export default function Welcome() {
                         <div>
                             <h4 className="text-[10px] font-black uppercase tracking-widest text-pink-600 mb-8">Company</h4>
                             <ul className="space-y-4 text-sm font-bold text-white/40">
-                                <li className="hover:text-white transition-colors cursor-pointer uppercase tracking-wider">About Us</li>
+                                <li className="hover:text-white transition-colors cursor-pointer uppercase tracking-wider">
+                                    <Link href={route('about')}>About Us</Link>
+                                </li>
                                 <li className="hover:text-white transition-colors cursor-pointer uppercase tracking-wider">Our Team</li>
                                 <li className="hover:text-white transition-colors cursor-pointer uppercase tracking-wider">Careers</li>
                                 <li className="hover:text-white transition-colors cursor-pointer uppercase tracking-wider">Contact</li>
@@ -773,7 +775,7 @@ export default function Welcome() {
                     <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
                         <p className="text-[10px] font-black uppercase tracking-widest text-white/20">© 2026 Dental SERP. All rights reserved.</p>
                         <div className="flex gap-8">
-                            <a href="#" className="text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-pink-600 transition-colors">Privacy Policy</a>
+                            <Link href={route('privacy')} className="text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-pink-600 transition-colors">Privacy Policy</Link>
                             <a href="#" className="text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-pink-600 transition-colors">Terms of Service</a>
                         </div>
                     </div>

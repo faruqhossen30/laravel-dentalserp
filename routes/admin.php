@@ -28,6 +28,9 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::resource('blogs', \App\Http\Controllers\Backend\BlogController::class)->names('admin.blogs');
     Route::resource('contacts', \App\Http\Controllers\Backend\ContactController::class)->only(['index', 'show', 'destroy'])->names('admin.contacts');
     
-    Route::get('settings', [\App\Http\Controllers\Backend\SettingController::class, 'index'])->name('admin.settings.index');
-    Route::post('settings', [\App\Http\Controllers\Backend\SettingController::class, 'update'])->name('admin.settings.update');
+    Route::get('smtp-setting', [\App\Http\Controllers\Backend\SmtpSettingController::class, 'index'])->name('admin.smtp-setting.index');
+    Route::post('smtp-setting', [\App\Http\Controllers\Backend\SmtpSettingController::class, 'update'])->name('admin.smtp-setting.update');
+
+    Route::get('general-setting', [\App\Http\Controllers\Backend\GeneralSettingController::class, 'index'])->name('admin.general-setting.index');
+    Route::post('general-setting', [\App\Http\Controllers\Backend\GeneralSettingController::class, 'update'])->name('admin.general-setting.update');
 });

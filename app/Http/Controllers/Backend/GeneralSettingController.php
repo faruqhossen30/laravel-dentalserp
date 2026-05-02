@@ -7,12 +7,12 @@ use App\Models\GeneralSetting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class SettingController extends Controller
+class GeneralSettingController extends Controller
 {
     public function index()
     {
         $settings = GeneralSetting::all()->pluck('value', 'key');
-        return Inertia::render('Backend/Setting/Index', [
+        return Inertia::render('Backend/Setting/GeneralIndex', [
             'settings' => $settings
         ]);
     }
@@ -28,6 +28,6 @@ class SettingController extends Controller
             );
         }
 
-        return back()->with('success', 'Settings updated successfully.');
+        return back()->with('success', 'General settings updated successfully.');
     }
 }
