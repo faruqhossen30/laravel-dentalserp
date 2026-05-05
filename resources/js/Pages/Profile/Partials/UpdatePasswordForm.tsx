@@ -93,7 +93,9 @@ export default function UpdatePasswordForm({
                         id="password"
                         ref={passwordInput}
                         value={data.password}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => setData('password', e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            setData('password', e.target.value)
+                        }
                         type="password"
                         className="mt-1 block w-full"
                         autoComplete="new-password"

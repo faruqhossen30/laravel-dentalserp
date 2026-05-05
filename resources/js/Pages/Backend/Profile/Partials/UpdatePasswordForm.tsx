@@ -1,17 +1,17 @@
+import { Button } from '@/Components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '@/Components/ui/card';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
-import { Button } from "@/Components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/Components/ui/card";
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 export default function UpdatePasswordForm({
     className = '',
@@ -65,22 +65,29 @@ export default function UpdatePasswordForm({
                     <CardHeader>
                         <CardTitle>Update Password</CardTitle>
                         <CardDescription>
-                            Ensure your account is using a long, random password to stay secure.
+                            Ensure your account is using a long, random password
+                            to stay secure.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <div className="space-y-2">
-                            <Label htmlFor="current_password">Old Password</Label>
+                            <Label htmlFor="current_password">
+                                Old Password
+                            </Label>
                             <Input
                                 id="current_password"
                                 ref={currentPasswordInput}
                                 value={data.current_password}
-                                onChange={(e) => setData('current_password', e.target.value)}
+                                onChange={(e) =>
+                                    setData('current_password', e.target.value)
+                                }
                                 type="password"
                                 autoComplete="current-password"
                             />
                             {errors.current_password && (
-                                <p className="text-sm font-medium text-destructive">{errors.current_password}</p>
+                                <p className="text-sm font-medium text-destructive">
+                                    {errors.current_password}
+                                </p>
                             )}
                         </div>
 
@@ -90,33 +97,50 @@ export default function UpdatePasswordForm({
                                 id="password"
                                 ref={passwordInput}
                                 value={data.password}
-                                onChange={(e) => setData('password', e.target.value)}
+                                onChange={(e) =>
+                                    setData('password', e.target.value)
+                                }
                                 type="password"
                                 autoComplete="new-password"
                             />
                             {errors.password && (
-                                <p className="text-sm font-medium text-destructive">{errors.password}</p>
+                                <p className="text-sm font-medium text-destructive">
+                                    {errors.password}
+                                </p>
                             )}
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="password_confirmation">Confirm Password</Label>
+                            <Label htmlFor="password_confirmation">
+                                Confirm Password
+                            </Label>
                             <Input
                                 id="password_confirmation"
                                 value={data.password_confirmation}
-                                onChange={(e) => setData('password_confirmation', e.target.value)}
+                                onChange={(e) =>
+                                    setData(
+                                        'password_confirmation',
+                                        e.target.value,
+                                    )
+                                }
                                 type="password"
                                 autoComplete="new-password"
                             />
                             {errors.password_confirmation && (
-                                <p className="text-sm font-medium text-destructive">{errors.password_confirmation}</p>
+                                <p className="text-sm font-medium text-destructive">
+                                    {errors.password_confirmation}
+                                </p>
                             )}
                         </div>
                     </CardContent>
                     <CardFooter className="flex items-center gap-4">
-                        <Button disabled={processing} type="submit">Save</Button>
+                        <Button disabled={processing} type="submit">
+                            Save
+                        </Button>
                         {recentlySuccessful && (
-                            <p className="text-sm text-muted-foreground">Saved.</p>
+                            <p className="text-sm text-muted-foreground">
+                                Saved.
+                            </p>
                         )}
                     </CardFooter>
                 </Card>

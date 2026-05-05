@@ -1,12 +1,12 @@
-import AdminLayout from '@/Layouts/AdminLayout';
-import { Head, useForm } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
+import { Checkbox } from '@/Components/ui/checkbox';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
-import { Checkbox } from '@/Components/ui/checkbox';
-import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
+import AdminLayout from '@/Layouts/AdminLayout';
+import { Head, useForm } from '@inertiajs/react';
 
-export default function Edit({ user, roles }: { user: any, roles: string[] }) {
+export default function Edit({ user, roles }: { user: any; roles: string[] }) {
     const { data, setData, put, processing, errors } = useForm({
         name: user.name,
         email: user.email,
@@ -24,14 +24,17 @@ export default function Edit({ user, roles }: { user: any, roles: string[] }) {
         if (checked) {
             setData('roles', [...data.roles, roleName]);
         } else {
-            setData('roles', data.roles.filter((r: any) => r !== roleName));
+            setData(
+                'roles',
+                data.roles.filter((r: any) => r !== roleName),
+            );
         }
     };
 
     return (
         <AdminLayout header="Edit User">
             <Head title="Edit User" />
-            <Card className="max-w-2xl mx-auto">
+            <Card className="mx-auto max-w-2xl">
                 <CardHeader>
                     <CardTitle>Edit User: {user.name}</CardTitle>
                 </CardHeader>
@@ -42,10 +45,16 @@ export default function Edit({ user, roles }: { user: any, roles: string[] }) {
                             <Input
                                 id="name"
                                 value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
+                                onChange={(e) =>
+                                    setData('name', e.target.value)
+                                }
                                 placeholder="User Name"
                             />
-                            {errors.name && <p className="text-destructive text-sm">{errors.name}</p>}
+                            {errors.name && (
+                                <p className="text-sm text-destructive">
+                                    {errors.name}
+                                </p>
+                            )}
                         </div>
 
                         <div className="space-y-2">
@@ -54,48 +63,83 @@ export default function Edit({ user, roles }: { user: any, roles: string[] }) {
                                 id="email"
                                 type="email"
                                 value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                onChange={(e) =>
+                                    setData('email', e.target.value)
+                                }
                                 placeholder="name@example.com"
                             />
-                            {errors.email && <p className="text-destructive text-sm">{errors.email}</p>}
+                            {errors.email && (
+                                <p className="text-sm text-destructive">
+                                    {errors.email}
+                                </p>
+                            )}
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="password">Password (Leave blank to keep current)</Label>
+                            <Label htmlFor="password">
+                                Password (Leave blank to keep current)
+                            </Label>
                             <Input
                                 id="password"
                                 type="password"
                                 value={data.password}
-                                onChange={(e) => setData('password', e.target.value)}
+                                onChange={(e) =>
+                                    setData('password', e.target.value)
+                                }
                             />
-                            {errors.password && <p className="text-destructive text-sm">{errors.password}</p>}
+                            {errors.password && (
+                                <p className="text-sm text-destructive">
+                                    {errors.password}
+                                </p>
+                            )}
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="password_confirmation">Confirm Password</Label>
+                            <Label htmlFor="password_confirmation">
+                                Confirm Password
+                            </Label>
                             <Input
                                 id="password_confirmation"
                                 type="password"
                                 value={data.password_confirmation}
-                                onChange={(e) => setData('password_confirmation', e.target.value)}
+                                onChange={(e) =>
+                                    setData(
+                                        'password_confirmation',
+                                        e.target.value,
+                                    )
+                                }
                             />
                         </div>
 
                         <div className="space-y-2">
                             <Label>Roles</Label>
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 border p-4 rounded-md">
+                            <div className="grid grid-cols-2 gap-4 rounded-md border p-4 md:grid-cols-3">
                                 {roles.map((role) => (
-                                    <div key={role} className="flex items-center space-x-2">
+                                    <div
+                                        key={role}
+                                        className="flex items-center space-x-2"
+                                    >
                                         <Checkbox
                                             id={`role-${role}`}
                                             checked={data.roles.includes(role)}
-                                            onCheckedChange={(checked) => handleRoleChange(role, checked as boolean)}
+                                            onCheckedChange={(checked) =>
+                                                handleRoleChange(
+                                                    role,
+                                                    checked as boolean,
+                                                )
+                                            }
                                         />
-                                        <Label htmlFor={`role-${role}`}>{role}</Label>
+                                        <Label htmlFor={`role-${role}`}>
+                                            {role}
+                                        </Label>
                                     </div>
                                 ))}
                             </div>
-                            {errors.roles && <p className="text-destructive text-sm">{errors.roles}</p>}
+                            {errors.roles && (
+                                <p className="text-sm text-destructive">
+                                    {errors.roles}
+                                </p>
+                            )}
                         </div>
 
                         <div className="flex justify-end">

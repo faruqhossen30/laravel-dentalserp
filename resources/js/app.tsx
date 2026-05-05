@@ -21,7 +21,7 @@ createInertiaApp({
                 el,
                 <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
                     <App {...props} />
-                </ThemeProvider>
+                </ThemeProvider>,
             );
             return;
         }
@@ -29,7 +29,7 @@ createInertiaApp({
         createRoot(el).render(
             <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
                 <App {...props} />
-            </ThemeProvider>
+            </ThemeProvider>,
         );
     },
     progress: {

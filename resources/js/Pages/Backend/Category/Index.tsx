@@ -1,7 +1,4 @@
-import AdminLayout from '@/Layouts/AdminLayout';
-import { Head, useForm, router } from '@inertiajs/react';
-import { Button } from '@/Components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
+import { Paginate } from '@/Components/Paginate';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,6 +10,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
+import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import {
     Dialog,
     DialogContent,
@@ -20,7 +19,9 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-} from "@/Components/ui/dialog"
+} from '@/Components/ui/dialog';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
 import {
     Table,
     TableBody,
@@ -29,10 +30,9 @@ import {
     TableHeader,
     TableRow,
 } from '@/Components/ui/table';
-import { Input } from '@/Components/ui/input';
-import { Label } from '@/Components/ui/label';
-import { Paginate } from '@/Components/Paginate';
-import { useState, useEffect } from 'react';
+import AdminLayout from '@/Layouts/AdminLayout';
+import { Head, router, useForm } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 
 export default function Index({ categories }: { categories: any }) {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -108,9 +108,11 @@ export default function Index({ categories }: { categories: any }) {
     return (
         <AdminLayout header="Categories">
             <Head title="Categories" />
-            
-            <div className="flex justify-end mb-4">
-                <Button onClick={() => setIsCreateModalOpen(true)}>Create Category</Button>
+
+            <div className="mb-4 flex justify-end">
+                <Button onClick={() => setIsCreateModalOpen(true)}>
+                    Create Category
+                </Button>
             </div>
 
             <Card>
@@ -129,45 +131,83 @@ export default function Index({ categories }: { categories: any }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {categories.data.map((category: any, index: number) => (
-                                    <TableRow key={category.id}>
-                                        <TableCell>{(categories.current_page - 1) * categories.per_page + index + 1}</TableCell>
-                                        <TableCell>{category.name}</TableCell>
-                                        <TableCell>{category.slug}</TableCell>
-                                        <TableCell className="flex gap-2">
-                                            <Button 
-                                                variant="outline" 
-                                                size="sm"
-                                                onClick={() => handleEditClick(category)}
-                                            >
-                                                Edit
-                                            </Button>
-                                            
-                                            <AlertDialog>
-                                                <AlertDialogTrigger asChild>
-                                                    <Button variant="destructive" size="sm">Delete</Button>
-                                                </AlertDialogTrigger>
-                                                <AlertDialogContent>
-                                                    <AlertDialogHeader>
-                                                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-                                                        <AlertDialogDescription>
-                                                            This action cannot be undone. This will permanently delete the category.
-                                                        </AlertDialogDescription>
-                                                    </AlertDialogHeader>
-                                                    <AlertDialogFooter>
-                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                        <AlertDialogAction onClick={() => handleDelete(category.id)}>
+                                {categories.data.map(
+                                    (category: any, index: number) => (
+                                        <TableRow key={category.id}>
+                                            <TableCell>
+                                                {(categories.current_page - 1) *
+                                                    categories.per_page +
+                                                    index +
+                                                    1}
+                                            </TableCell>
+                                            <TableCell>
+                                                {category.name}
+                                            </TableCell>
+                                            <TableCell>
+                                                {category.slug}
+                                            </TableCell>
+                                            <TableCell className="flex gap-2">
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    onClick={() =>
+                                                        handleEditClick(
+                                                            category,
+                                                        )
+                                                    }
+                                                >
+                                                    Edit
+                                                </Button>
+
+                                                <AlertDialog>
+                                                    <AlertDialogTrigger asChild>
+                                                        <Button
+                                                            variant="destructive"
+                                                            size="sm"
+                                                        >
                                                             Delete
-                                                        </AlertDialogAction>
-                                                    </AlertDialogFooter>
-                                                </AlertDialogContent>
-                                            </AlertDialog>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
+                                                        </Button>
+                                                    </AlertDialogTrigger>
+                                                    <AlertDialogContent>
+                                                        <AlertDialogHeader>
+                                                            <AlertDialogTitle>
+                                                                Are you sure?
+                                                            </AlertDialogTitle>
+                                                            <AlertDialogDescription>
+                                                                This action
+                                                                cannot be
+                                                                undone. This
+                                                                will permanently
+                                                                delete the
+                                                                category.
+                                                            </AlertDialogDescription>
+                                                        </AlertDialogHeader>
+                                                        <AlertDialogFooter>
+                                                            <AlertDialogCancel>
+                                                                Cancel
+                                                            </AlertDialogCancel>
+                                                            <AlertDialogAction
+                                                                onClick={() =>
+                                                                    handleDelete(
+                                                                        category.id,
+                                                                    )
+                                                                }
+                                                            >
+                                                                Delete
+                                                            </AlertDialogAction>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialog>
+                                            </TableCell>
+                                        </TableRow>
+                                    ),
+                                )}
                                 {categories.data.length === 0 && (
                                     <TableRow>
-                                        <TableCell colSpan={4} className="text-center text-muted-foreground">
+                                        <TableCell
+                                            colSpan={4}
+                                            className="text-center text-muted-foreground"
+                                        >
                                             No categories found.
                                         </TableCell>
                                     </TableRow>
@@ -182,7 +222,10 @@ export default function Index({ categories }: { categories: any }) {
             </Card>
 
             {/* Create Modal */}
-            <Dialog open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen}>
+            <Dialog
+                open={isCreateModalOpen}
+                onOpenChange={setIsCreateModalOpen}
+            >
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Create New Category</DialogTitle>
@@ -190,31 +233,57 @@ export default function Index({ categories }: { categories: any }) {
                             Add a new category with a unique name and slug.
                         </DialogDescription>
                     </DialogHeader>
-                    <form onSubmit={handleCreateSubmit} className="space-y-4 py-4">
+                    <form
+                        onSubmit={handleCreateSubmit}
+                        className="space-y-4 py-4"
+                    >
                         <div className="space-y-2">
                             <Label htmlFor="create-name">Name</Label>
                             <Input
                                 id="create-name"
                                 value={createForm.data.name}
-                                onChange={(e) => createForm.setData('name', e.target.value)}
+                                onChange={(e) =>
+                                    createForm.setData('name', e.target.value)
+                                }
                                 placeholder="e.g. Technology"
                             />
-                            {createForm.errors.name && <p className="text-destructive text-sm">{createForm.errors.name}</p>}
+                            {createForm.errors.name && (
+                                <p className="text-sm text-destructive">
+                                    {createForm.errors.name}
+                                </p>
+                            )}
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="create-slug">Slug</Label>
                             <Input
                                 id="create-slug"
                                 value={createForm.data.slug}
-                                onChange={(e) => createForm.setData('slug', e.target.value)}
+                                onChange={(e) =>
+                                    createForm.setData('slug', e.target.value)
+                                }
                                 placeholder="technology"
                             />
-                            {createForm.errors.slug && <p className="text-destructive text-sm">{createForm.errors.slug}</p>}
+                            {createForm.errors.slug && (
+                                <p className="text-sm text-destructive">
+                                    {createForm.errors.slug}
+                                </p>
+                            )}
                         </div>
                         <DialogFooter>
-                            <Button type="button" variant="outline" onClick={() => setIsCreateModalOpen(false)}>Cancel</Button>
-                            <Button type="submit" disabled={createForm.processing}>
-                                {createForm.processing ? 'Creating...' : 'Create Category'}
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => setIsCreateModalOpen(false)}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={createForm.processing}
+                            >
+                                {createForm.processing
+                                    ? 'Creating...'
+                                    : 'Create Category'}
                             </Button>
                         </DialogFooter>
                     </form>
@@ -230,31 +299,57 @@ export default function Index({ categories }: { categories: any }) {
                             Update the category details.
                         </DialogDescription>
                     </DialogHeader>
-                    <form onSubmit={handleEditSubmit} className="space-y-4 py-4">
+                    <form
+                        onSubmit={handleEditSubmit}
+                        className="space-y-4 py-4"
+                    >
                         <div className="space-y-2">
                             <Label htmlFor="edit-name">Name</Label>
                             <Input
                                 id="edit-name"
                                 value={editForm.data.name}
-                                onChange={(e) => editForm.setData('name', e.target.value)}
+                                onChange={(e) =>
+                                    editForm.setData('name', e.target.value)
+                                }
                                 placeholder="e.g. Technology"
                             />
-                            {editForm.errors.name && <p className="text-destructive text-sm">{editForm.errors.name}</p>}
+                            {editForm.errors.name && (
+                                <p className="text-sm text-destructive">
+                                    {editForm.errors.name}
+                                </p>
+                            )}
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="edit-slug">Slug</Label>
                             <Input
                                 id="edit-slug"
                                 value={editForm.data.slug}
-                                onChange={(e) => editForm.setData('slug', e.target.value)}
+                                onChange={(e) =>
+                                    editForm.setData('slug', e.target.value)
+                                }
                                 placeholder="technology"
                             />
-                            {editForm.errors.slug && <p className="text-destructive text-sm">{editForm.errors.slug}</p>}
+                            {editForm.errors.slug && (
+                                <p className="text-sm text-destructive">
+                                    {editForm.errors.slug}
+                                </p>
+                            )}
                         </div>
                         <DialogFooter>
-                            <Button type="button" variant="outline" onClick={() => setIsEditModalOpen(false)}>Cancel</Button>
-                            <Button type="submit" disabled={editForm.processing}>
-                                {editForm.processing ? 'Updating...' : 'Update Category'}
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => setIsEditModalOpen(false)}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                type="submit"
+                                disabled={editForm.processing}
+                            >
+                                {editForm.processing
+                                    ? 'Updating...'
+                                    : 'Update Category'}
                             </Button>
                         </DialogFooter>
                     </form>

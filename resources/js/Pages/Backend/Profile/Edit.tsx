@@ -21,7 +21,7 @@ export default function Edit({
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-background overflow-hidden shadow sm:rounded-lg">
+                    <div className="overflow-hidden bg-background shadow sm:rounded-lg">
                         <UpdateProfileInformationForm
                             mustVerifyEmail={mustVerifyEmail}
                             status={status}
@@ -29,11 +29,11 @@ export default function Edit({
                         />
                     </div>
 
-                    <div className="bg-background overflow-hidden shadow sm:rounded-lg">
+                    <div className="overflow-hidden bg-background shadow sm:rounded-lg">
                         <UpdatePasswordForm className="max-w-xl" />
                     </div>
 
-                    <div className="bg-background overflow-hidden shadow sm:rounded-lg">
+                    <div className="overflow-hidden bg-background shadow sm:rounded-lg">
                         <DeleteUserForm className="max-w-xl" />
                     </div>
                 </div>

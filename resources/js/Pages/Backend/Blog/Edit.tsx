@@ -1,16 +1,22 @@
-import AdminLayout from '@/Layouts/AdminLayout';
-import { Head, useForm, Link } from '@inertiajs/react';
+import LexicalEditor from '@/Components/LexicalEditor/LexicalEditor';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
+import { Checkbox } from '@/Components/ui/checkbox';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { Textarea } from '@/Components/ui/textarea';
-import { Checkbox } from '@/Components/ui/checkbox';
-import LexicalEditor from '@/Components/LexicalEditor/LexicalEditor';
-import { useState, useEffect } from 'react';
+import AdminLayout from '@/Layouts/AdminLayout';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import CreatableSelect from 'react-select/creatable';
 
-export default function Edit({ blog, categories }: { blog: any; categories: any[] }) {
+export default function Edit({
+    blog,
+    categories,
+}: {
+    blog: any;
+    categories: any[];
+}) {
     const { data, setData, post, processing, errors } = useForm({
         title: blog.title || '',
         slug: blog.slug || '',
@@ -24,9 +30,11 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
     });
 
     const [keywordsOptions, setKeywordsOptions] = useState<any[]>(
-        blog.meta_keywords 
-            ? blog.meta_keywords.split(',').map((k: string) => ({ label: k.trim(), value: k.trim() })) 
-            : []
+        blog.meta_keywords
+            ? blog.meta_keywords
+                  .split(',')
+                  .map((k: string) => ({ label: k.trim(), value: k.trim() }))
+            : [],
     );
 
     const generateSlug = (text: string) => {
@@ -39,7 +47,7 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
     // Auto-slug generation for Title changes
     // Unlike Create, maybe we don't want to auto-change slug unless user edits it specifically?
     // But for consistency with Category, I'll keep it or make it optional.
-    // I'll only auto-generate if title changes and user hasn't manually edited slug yet? 
+    // I'll only auto-generate if title changes and user hasn't manually edited slug yet?
     useEffect(() => {
         setData('slug', generateSlug(data.title));
     }, [data.title]);
@@ -52,7 +60,9 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
     };
 
     const handleKeywordsChange = (newValue: any) => {
-        const keywords = newValue ? newValue.map((v: any) => v.value).join(',') : '';
+        const keywords = newValue
+            ? newValue.map((v: any) => v.value).join(',')
+            : '';
         setData('meta_keywords', keywords);
         setKeywordsOptions(newValue || []);
     };
@@ -66,16 +76,16 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
     return (
         <AdminLayout header="Edit Blog">
             <Head title="Edit Blog" />
-            
-            <div className="flex justify-start mb-4">
+
+            <div className="mb-4 flex justify-start">
                 <Link href={route('admin.blogs.index')}>
                     <Button variant="outline">Back to List</Button>
                 </Link>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div className="lg:col-span-2 space-y-6">
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+                    <div className="space-y-6 lg:col-span-2">
                         <Card>
                             <CardHeader>
                                 <CardTitle>Content</CardTitle>
@@ -86,10 +96,16 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
                                     <Input
                                         id="title"
                                         value={data.title}
-                                        onChange={(e) => setData('title', e.target.value)}
+                                        onChange={(e) =>
+                                            setData('title', e.target.value)
+                                        }
                                         placeholder="Enter blog title"
                                     />
-                                    {errors.title && <p className="text-destructive text-sm">{errors.title}</p>}
+                                    {errors.title && (
+                                        <p className="text-sm text-destructive">
+                                            {errors.title}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div className="space-y-2">
@@ -97,19 +113,31 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
                                     <Input
                                         id="slug"
                                         value={data.slug}
-                                        onChange={(e) => setData('slug', e.target.value)}
+                                        onChange={(e) =>
+                                            setData('slug', e.target.value)
+                                        }
                                         placeholder="blog-title-slug"
                                     />
-                                    {errors.slug && <p className="text-destructive text-sm">{errors.slug}</p>}
+                                    {errors.slug && (
+                                        <p className="text-sm text-destructive">
+                                            {errors.slug}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div className="space-y-2">
                                     <Label htmlFor="content">Content</Label>
                                     <LexicalEditor
                                         value={data.content}
-                                        onChange={(val) => setData('content', val)}
+                                        onChange={(val) =>
+                                            setData('content', val)
+                                        }
                                     />
-                                    {errors.content && <p className="text-destructive text-sm">{errors.content}</p>}
+                                    {errors.content && (
+                                        <p className="text-sm text-destructive">
+                                            {errors.content}
+                                        </p>
+                                    )}
                                 </div>
                             </CardContent>
                         </Card>
@@ -120,25 +148,47 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="meta_title">Meta Title</Label>
+                                    <Label htmlFor="meta_title">
+                                        Meta Title
+                                    </Label>
                                     <Input
                                         id="meta_title"
                                         value={data.meta_title}
-                                        onChange={(e) => setData('meta_title', e.target.value)}
+                                        onChange={(e) =>
+                                            setData(
+                                                'meta_title',
+                                                e.target.value,
+                                            )
+                                        }
                                         placeholder="SEO Title"
                                     />
-                                    {errors.meta_title && <p className="text-destructive text-sm">{errors.meta_title}</p>}
+                                    {errors.meta_title && (
+                                        <p className="text-sm text-destructive">
+                                            {errors.meta_title}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="meta_description">Meta Description</Label>
+                                    <Label htmlFor="meta_description">
+                                        Meta Description
+                                    </Label>
                                     <Textarea
                                         id="meta_description"
                                         value={data.meta_description}
-                                        onChange={(e) => setData('meta_description', e.target.value)}
+                                        onChange={(e) =>
+                                            setData(
+                                                'meta_description',
+                                                e.target.value,
+                                            )
+                                        }
                                         placeholder="SEO Description"
                                     />
-                                    {errors.meta_description && <p className="text-destructive text-sm">{errors.meta_description}</p>}
+                                    {errors.meta_description && (
+                                        <p className="text-sm text-destructive">
+                                            {errors.meta_description}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div className="space-y-2">
@@ -152,7 +202,11 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
                                         className="react-select-container"
                                         classNamePrefix="react-select"
                                     />
-                                    {errors.meta_keywords && <p className="text-destructive text-sm">{errors.meta_keywords}</p>}
+                                    {errors.meta_keywords && (
+                                        <p className="text-sm text-destructive">
+                                            {errors.meta_keywords}
+                                        </p>
+                                    )}
                                 </div>
                             </CardContent>
                         </Card>
@@ -166,11 +220,13 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
                             <CardContent className="space-y-4">
                                 {blog.image && !data.image && (
                                     <div className="mb-4">
-                                        <p className="text-sm text-muted-foreground mb-2">Current Image:</p>
-                                        <img 
-                                            src={`/storage/${blog.image}`} 
-                                            alt="Current" 
-                                            className="w-full h-32 object-cover rounded border"
+                                        <p className="mb-2 text-sm text-muted-foreground">
+                                            Current Image:
+                                        </p>
+                                        <img
+                                            src={`/storage/${blog.image}`}
+                                            alt="Current"
+                                            className="h-32 w-full rounded border object-cover"
                                         />
                                     </div>
                                 )}
@@ -179,10 +235,21 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
                                     <Input
                                         id="image"
                                         type="file"
-                                        onChange={(e) => setData('image', e.target.files ? e.target.files[0] : null)}
+                                        onChange={(e) =>
+                                            setData(
+                                                'image',
+                                                e.target.files
+                                                    ? e.target.files[0]
+                                                    : null,
+                                            )
+                                        }
                                         accept="image/*"
                                     />
-                                    {errors.image && <p className="text-destructive text-sm">{errors.image}</p>}
+                                    {errors.image && (
+                                        <p className="text-sm text-destructive">
+                                            {errors.image}
+                                        </p>
+                                    )}
                                 </div>
                             </CardContent>
                         </Card>
@@ -194,25 +261,53 @@ export default function Edit({ blog, categories }: { blog: any; categories: any[
                             <CardContent>
                                 <div className="space-y-2">
                                     {categories.map((category) => (
-                                        <div key={category.id} className="flex items-center space-x-2">
-                                            <Checkbox 
-                                                id={`cat-${category.id}`} 
-                                                checked={data.categories.includes(category.id)}
-                                                onCheckedChange={() => handleCategoryToggle(category.id)}
+                                        <div
+                                            key={category.id}
+                                            className="flex items-center space-x-2"
+                                        >
+                                            <Checkbox
+                                                id={`cat-${category.id}`}
+                                                checked={data.categories.includes(
+                                                    category.id,
+                                                )}
+                                                onCheckedChange={() =>
+                                                    handleCategoryToggle(
+                                                        category.id,
+                                                    )
+                                                }
                                             />
-                                            <Label htmlFor={`cat-${category.id}`} className="cursor-pointer">{category.name}</Label>
+                                            <Label
+                                                htmlFor={`cat-${category.id}`}
+                                                className="cursor-pointer"
+                                            >
+                                                {category.name}
+                                            </Label>
                                         </div>
                                     ))}
-                                    {categories.length === 0 && <p className="text-sm text-muted-foreground">No categories available.</p>}
-                                    {errors.categories && <p className="text-destructive text-sm">{errors.categories}</p>}
+                                    {categories.length === 0 && (
+                                        <p className="text-sm text-muted-foreground">
+                                            No categories available.
+                                        </p>
+                                    )}
+                                    {errors.categories && (
+                                        <p className="text-sm text-destructive">
+                                            {errors.categories}
+                                        </p>
+                                    )}
                                 </div>
                             </CardContent>
                         </Card>
 
                         <Card>
                             <CardContent className="pt-6">
-                                <Button type="submit" className="w-full" disabled={processing}>
-                                    {processing ? 'Updating...' : 'Update Blog Post'}
+                                <Button
+                                    type="submit"
+                                    className="w-full"
+                                    disabled={processing}
+                                >
+                                    {processing
+                                        ? 'Updating...'
+                                        : 'Update Blog Post'}
                                 </Button>
                             </CardContent>
                         </Card>

@@ -5,9 +5,5 @@ export default function AuthenticatedLayout({
     header,
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
-    return (
-        <AdminLayout header={header}>
-            {children}
-        </AdminLayout>
-    );
+    return <AdminLayout header={header}>{children}</AdminLayout>;
 }

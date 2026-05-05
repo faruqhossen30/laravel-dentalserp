@@ -1,17 +1,17 @@
+import { Button } from '@/Components/ui/button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '@/Components/ui/card';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
-import { Button } from "@/Components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/Components/ui/card";
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 export default function UpdateProfileInformation({
     mustVerifyEmail,
@@ -34,7 +34,8 @@ export default function UpdateProfileInformation({
         e.preventDefault();
 
         patch(route('profile.update'), {
-            onSuccess: () => toast.success('Profile information updated successfully'),
+            onSuccess: () =>
+                toast.success('Profile information updated successfully'),
         });
     };
 
@@ -45,7 +46,8 @@ export default function UpdateProfileInformation({
                     <CardHeader>
                         <CardTitle>Profile Information</CardTitle>
                         <CardDescription>
-                            Update your account's profile information and email address.
+                            Update your account's profile information and email
+                            address.
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -54,12 +56,16 @@ export default function UpdateProfileInformation({
                             <Input
                                 id="name"
                                 value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
+                                onChange={(e) =>
+                                    setData('name', e.target.value)
+                                }
                                 required
                                 autoComplete="name"
                             />
                             {errors.name && (
-                                <p className="text-sm font-medium text-destructive">{errors.name}</p>
+                                <p className="text-sm font-medium text-destructive">
+                                    {errors.name}
+                                </p>
                             )}
                         </div>
 
@@ -69,12 +75,16 @@ export default function UpdateProfileInformation({
                                 id="email"
                                 type="email"
                                 value={data.email}
-                                onChange={(e) => setData('email', e.target.value)}
+                                onChange={(e) =>
+                                    setData('email', e.target.value)
+                                }
                                 required
                                 autoComplete="username"
                             />
                             {errors.email && (
-                                <p className="text-sm font-medium text-destructive">{errors.email}</p>
+                                <p className="text-sm font-medium text-destructive">
+                                    {errors.email}
+                                </p>
                             )}
                         </div>
 
@@ -88,22 +98,28 @@ export default function UpdateProfileInformation({
                                         as="button"
                                         className="ml-1 rounded-md text-sm text-muted-foreground underline hover:text-foreground"
                                     >
-                                        Click here to re-send the verification email.
+                                        Click here to re-send the verification
+                                        email.
                                     </Link>
                                 </p>
 
                                 {status === 'verification-link-sent' && (
                                     <div className="mt-2 text-sm font-medium text-green-600">
-                                        A new verification link has been sent to your email address.
+                                        A new verification link has been sent to
+                                        your email address.
                                     </div>
                                 )}
                             </div>
                         )}
                     </CardContent>
                     <CardFooter className="flex items-center gap-4">
-                        <Button disabled={processing} type="submit">Save</Button>
+                        <Button disabled={processing} type="submit">
+                            Save
+                        </Button>
                         {recentlySuccessful && (
-                            <p className="text-sm text-muted-foreground">Saved.</p>
+                            <p className="text-sm text-muted-foreground">
+                                Saved.
+                            </p>
                         )}
                     </CardFooter>
                 </Card>

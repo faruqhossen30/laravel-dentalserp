@@ -1,9 +1,9 @@
-import AdminLayout from '@/Layouts/AdminLayout';
-import { Head, useForm } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
+import AdminLayout from '@/Layouts/AdminLayout';
+import { Head, useForm } from '@inertiajs/react';
 
 export default function Edit({ permission }: { permission: any }) {
     const { data, setData, put, processing, errors } = useForm({
@@ -18,7 +18,7 @@ export default function Edit({ permission }: { permission: any }) {
     return (
         <AdminLayout header="Edit Permission">
             <Head title="Edit Permission" />
-            <Card className="max-w-2xl mx-auto">
+            <Card className="mx-auto max-w-2xl">
                 <CardHeader>
                     <CardTitle>Edit Permission: {permission.name}</CardTitle>
                 </CardHeader>
@@ -29,15 +29,23 @@ export default function Edit({ permission }: { permission: any }) {
                             <Input
                                 id="name"
                                 value={data.name}
-                                onChange={(e) => setData('name', e.target.value)}
+                                onChange={(e) =>
+                                    setData('name', e.target.value)
+                                }
                                 placeholder="Permission Name"
                             />
-                            {errors.name && <p className="text-destructive text-sm">{errors.name}</p>}
+                            {errors.name && (
+                                <p className="text-sm text-destructive">
+                                    {errors.name}
+                                </p>
+                            )}
                         </div>
 
                         <div className="flex justify-end">
                             <Button type="submit" disabled={processing}>
-                                {processing ? 'Updating...' : 'Update Permission'}
+                                {processing
+                                    ? 'Updating...'
+                                    : 'Update Permission'}
                             </Button>
                         </div>
                     </form>

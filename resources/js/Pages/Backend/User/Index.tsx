@@ -1,7 +1,4 @@
-import AdminLayout from '@/Layouts/AdminLayout';
-import { Head, Link, router } from '@inertiajs/react';
-import { Button } from '@/Components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
+import { Paginate } from '@/Components/Paginate';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -13,7 +10,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
-import { Paginate } from '@/Components/Paginate';
+import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card';
 import {
     Table,
     TableBody,
@@ -22,12 +20,20 @@ import {
     TableHeader,
     TableRow,
 } from '@/Components/ui/table';
+import AdminLayout from '@/Layouts/AdminLayout';
+import { Head, Link, router } from '@inertiajs/react';
 
-export default function Index({ users, title = 'Users' }: { users: any, title?: string }) {
+export default function Index({
+    users,
+    title = 'Users',
+}: {
+    users: any;
+    title?: string;
+}) {
     return (
         <AdminLayout header={title}>
             <Head title={title} />
-            <div className="flex justify-end mb-4">
+            <div className="mb-4 flex justify-end">
                 <Link href={route('admin.users.create')}>
                     <Button>Create User</Button>
                 </Link>
@@ -51,30 +57,68 @@ export default function Index({ users, title = 'Users' }: { users: any, title?: 
                             <TableBody>
                                 {users.data.map((user: any, index: number) => (
                                     <TableRow key={user.id}>
-                                        <TableCell>{(users.current_page - 1) * users.per_page + index + 1}</TableCell>
+                                        <TableCell>
+                                            {(users.current_page - 1) *
+                                                users.per_page +
+                                                index +
+                                                1}
+                                        </TableCell>
                                         <TableCell>{user.name}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>
-                                            {user.roles?.map((r: any) => r.name).join(', ')}
+                                            {user.roles
+                                                ?.map((r: any) => r.name)
+                                                .join(', ')}
                                         </TableCell>
                                         <TableCell className="flex gap-2">
-                                            <Link href={route('admin.users.edit', user.id)}>
-                                                <Button variant="outline" size="sm">Edit</Button>
+                                            <Link
+                                                href={route(
+                                                    'admin.users.edit',
+                                                    user.id,
+                                                )}
+                                            >
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                >
+                                                    Edit
+                                                </Button>
                                             </Link>
                                             <AlertDialog>
                                                 <AlertDialogTrigger asChild>
-                                                    <Button variant="destructive" size="sm">Delete</Button>
+                                                    <Button
+                                                        variant="destructive"
+                                                        size="sm"
+                                                    >
+                                                        Delete
+                                                    </Button>
                                                 </AlertDialogTrigger>
                                                 <AlertDialogContent>
                                                     <AlertDialogHeader>
-                                                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                                        <AlertDialogTitle>
+                                                            Are you sure?
+                                                        </AlertDialogTitle>
                                                         <AlertDialogDescription>
-                                                            This action cannot be undone. This will permanently delete the user.
+                                                            This action cannot
+                                                            be undone. This will
+                                                            permanently delete
+                                                            the user.
                                                         </AlertDialogDescription>
                                                     </AlertDialogHeader>
                                                     <AlertDialogFooter>
-                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                        <AlertDialogAction onClick={() => router.delete(route('admin.users.destroy', user.id))}>
+                                                        <AlertDialogCancel>
+                                                            Cancel
+                                                        </AlertDialogCancel>
+                                                        <AlertDialogAction
+                                                            onClick={() =>
+                                                                router.delete(
+                                                                    route(
+                                                                        'admin.users.destroy',
+                                                                        user.id,
+                                                                    ),
+                                                                )
+                                                            }
+                                                        >
                                                             Delete
                                                         </AlertDialogAction>
                                                     </AlertDialogFooter>
@@ -85,7 +129,10 @@ export default function Index({ users, title = 'Users' }: { users: any, title?: 
                                 ))}
                                 {users.data.length === 0 && (
                                     <TableRow>
-                                        <TableCell colSpan={5} className="text-center text-muted-foreground">
+                                        <TableCell
+                                            colSpan={5}
+                                            className="text-center text-muted-foreground"
+                                        >
                                             No users found.
                                         </TableCell>
                                     </TableRow>
